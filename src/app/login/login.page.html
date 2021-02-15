@@ -1,0 +1,26 @@
+<ion-content>
+  <div class="container">
+    <ion-img src="../../assets/user-icon.png" style="height: 20rem;"></ion-img>
+    
+    <div class="login-info p-4">
+      <ion-card class="radius">      
+        <ion-input class="align-center font" placeholder="Usuário"></ion-input>
+      </ion-card>
+  
+      <ion-card class="radius">
+        <ion-input type="password" class="align-center font" placeholder="Senha"></ion-input>
+      </ion-card>
+      
+      <div class="p-left-4 p-top-2" (click)="rememberClick()">
+        <ion-checkbox slot="end" [(ngModel)]="remember"></ion-checkbox>
+        <ion-label class="p-left-4" color="light">Lembrar?</ion-label>  
+      </div>
+
+      <ion-button color="light" class="p-left-2 p-right-2 m-top-6" expand="block" shape="round" size="large" fill="outline">ACESSAR</ion-button>
+
+      <div class="align-center p-top-6">
+        <ion-label color="light">Não possui conta? Cadastre-se</ion-label>
+      </div>
+    </div>
+  </div>
+</ion-content>

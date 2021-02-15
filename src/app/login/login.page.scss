@@ -1,0 +1,32 @@
+@import "../../theme/variables.scss";
+
+.container{
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  -o-object-fit: contain;
+  object-fit: contain;
+  background-image: url("../../assets/login-header.jpg");
+}
+
+.login-info{
+  // margin: 50%;
+}
+
+.radius{
+  border-radius: 2rem;
+}
+
+.font{
+  height: 3rem;
+  background-color: #c8cdcf;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: black;
+}
