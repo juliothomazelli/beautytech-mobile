@@ -1,0 +1,14 @@
+<ion-header>
+  
+</ion-header>
+
+<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom" color="primary">
+      <ion-tab-button *ngFor="let page of pages" [tab]="page.route">
+        <ion-icon [name]="page.icon"></ion-icon>
+        <ion-label>{{page.name}}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

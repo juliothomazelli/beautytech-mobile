@@ -6,6 +6,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginRest } from './rest/login.rest';
+import { HttpService } from './http/http.service';
+import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,13 +22,20 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    IonicModule.forRoot()
   ],
   providers: [
     { 
       provide: RouteReuseStrategy, 
-      useClass: IonicRouteStrategy 
-    }
+      useClass: IonicRouteStrategy
+    },
+    HttpService,
+    LoginRest
   ],
   bootstrap: [
     AppComponent
