@@ -13,12 +13,19 @@ export class AppComponent {
   scheduleClick(){
     this.router.navigateByUrl('home/dashboard');
   }
+
   notificationClick(){
     this.router.navigateByUrl('home/notification');
   }
+
   chatClick(){
     this.router.navigateByUrl('home/chat');
   }
+
+  configurationClick(){
+    this.router.navigateByUrl('home/configuration');
+  }
+
   logoutClick(){
     this.router.navigateByUrl('');
   }
