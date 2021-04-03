@@ -11,6 +11,7 @@ import { HttpService } from './http/http.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WebSocketService } from './websocket/websocket.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FormsModule } from '@angular/forms';
       useClass: IonicRouteStrategy
     },
     HttpService,
-    LoginRest
+    LoginRest,
+    WebSocketService
   ],
   bootstrap: [
     AppComponent

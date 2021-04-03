@@ -1,5 +1,6 @@
 export enum StorageUtilsTypes{
-  sessionToken = 'sessionToken'
+  sessionToken = 'sessionToken',
+  userInfo     = 'userInfo'
 }
 
 export class StorageUtils {

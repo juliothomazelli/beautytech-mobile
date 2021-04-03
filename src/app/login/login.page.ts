@@ -29,6 +29,8 @@ export class LoginPage implements OnInit {
   }
 
   login(){
+    
+
     if (StringUtils.isEmpty(this.username) || StringUtils.isEmpty(this.password)){
       ViewUtils.getInstance().messageToast('Atenção', 'Favor preencher Email e Senha');
       return;
@@ -41,7 +43,7 @@ export class LoginPage implements OnInit {
 
     this.restLogin.login(user).then(
       (response) => {
-        if (ObjectUtils.isNullOrUndefined(response) || ObjectUtils.isNullOrUndefined(response.token) || StringUtils.isEmpty(response.token)){
+        if (ObjectUtils.isNullOrUndefined(response)){
           return;
         }
 

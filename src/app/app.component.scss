@@ -7,6 +7,19 @@
   height: 4rem;
 }
 
+.avatar-image{
+  border-radius: 0.7rem;
+}
+
 .ion-item-avatar{
   --padding-start: 0;
+  --padding-end: 0;
+}
+
+.colors-content{
+  border-radius: 2rem;
+}
+
+.colors-icons{
+  font-size: medium;
 }

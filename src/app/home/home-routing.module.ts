@@ -16,11 +16,23 @@ const routes: Routes = [
       },
       {
         path: 'notification',
-        loadChildren: () => import('../notification/notification.module').then( m => m.NotificationPageModule)
+        loadChildren: () => import('../notification/notification.module').then( m => m.NotificationPageModule),
+        canActivate: [AuthGuardService]
       },
       {
         path: 'chat',
-        loadChildren: () => import('../chat/chat.module').then( m => m.ChatPageModule)
+        loadChildren: () => import('../chat/chat.module').then( m => m.ChatPageModule),
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'configuration',
+        loadChildren: () => import('../configuration/configuration.module').then( m => m.ConfigurationPageModule),
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'service',
+        loadChildren: () => import('../service/service.module').then( m => m.ServicePageModule),
+        canActivate: [AuthGuardService]
       }
     ]
   }

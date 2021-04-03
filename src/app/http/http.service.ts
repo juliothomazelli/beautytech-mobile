@@ -35,6 +35,14 @@ export class HttpService {
     }
   }
 
+  public getWssBaseUrl() : string {
+    if (this.isOnlineBuild){
+      return 'wss online';
+    } else {
+      return 'ws://localhost:8080';
+    }
+  }
+
   private get(){
     let headers = this.prepareHeaders();
     return this.http.get(this.URL, {headers: headers, observe: 'response'}).pipe(timeout(this.TIMEOUT));

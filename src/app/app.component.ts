@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { ObjectUtils } from './utils/ObjectUtils';
+import { WebSocketService } from './websocket/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,9 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private router : Router) {}
+  public showColorRange = false;
+
+  constructor(private router : Router, private websocket : WebSocketService) {}
 
   scheduleClick(){
     this.router.navigateByUrl('home/dashboard');
@@ -22,11 +26,20 @@ export class AppComponent {
     this.router.navigateByUrl('home/chat');
   }
 
+  serviceClick(){
+    this.router.navigateByUrl('home/service');
+  }
+
   configurationClick(){
     this.router.navigateByUrl('home/configuration');
   }
 
+  colorRangeVisibility(){
+    this.showColorRange = !this.showColorRange;
+  }
+
   logoutClick(){
+    this.websocket.close();
     this.router.navigateByUrl('');
   }
 }

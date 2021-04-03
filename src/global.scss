@@ -169,7 +169,7 @@ ion-icon {
     background: currentColor;
   }
 
-  // &[name*="delete"] {
-  //   mask-image: url(./app/icons/agilit-delete.svg);
-  // }
+  &[name*="invert-colors"] {
+    mask-image: url(./assets/icon/bt-invert-colors.svg);
+  }
 }

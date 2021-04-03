@@ -27,11 +27,12 @@ export class RequestService {
       return false;
     }
 
-    if (ObjectUtils.isNullOrUndefined(response.body) || !response.body.hasOwnProperty('token') || StringUtils.isEmpty(response.body.token)){
+    if (ObjectUtils.isNullOrUndefined(response.body) || !response.body.hasOwnProperty('Token') || StringUtils.isEmpty(response.body.Token)){
       return false;
     }    
 
-    StorageUtils.storeData(StorageUtilsTypes.sessionToken, response.body.token);
+    StorageUtils.storeData(StorageUtilsTypes.sessionToken, response.body.Token);
+    StorageUtils.storeDataJSON(StorageUtilsTypes.userInfo, response.body);
 
     return true;
   }

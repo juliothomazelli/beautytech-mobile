@@ -2,14 +2,19 @@
   <ion-menu side="start">
     <ion-header>
       <ion-toolbar color="primary" class="toolbar">
-        <ion-item class="ion-item-avatar" color="primary">
-          <ion-avatar class="m-left-4 m-top-4 avatar">
-            <img src="../assets/avatar.svg">
+        <ion-item class="p-left-4 ion-item-avatar" color="primary" lines="none">
+          <ion-avatar class="avatar">
+            <img class="avatar-image" src="../assets/user-icon.png">
           </ion-avatar>
-          <ion-icon name="sunny" slot="end"></ion-icon>
+          <ion-item class="colors-content ion-item-avatar" slot="end" color="light" lines="none">
+            <ion-icon class="colors-icons" color="primary" slot="end" *ngIf="showColorRange" name="bt-invert-colors"></ion-icon>
+            <ion-icon class="colors-icons" color="tertiary" slot="end" *ngIf="showColorRange" name="bt-invert-colors"></ion-icon>
+            <ion-icon class="colors-icons" color="warning" slot="end" *ngIf="showColorRange" name="bt-invert-colors"></ion-icon>
+            <ion-icon class="colors-icons" color="secondary" name="sunny" slot="end" (click)="colorRangeVisibility()"></ion-icon>
+          </ion-item>
         </ion-item>
-        <ion-item class="ion-item-avatar" color="primary">
-          <ion-label class="p-left-4">Julio Thomazelli</ion-label>
+        <ion-item class="p-left-4 ion-item-avatar" color="primary" lines="none">
+          <ion-label>Julio Thomazelli</ion-label>
         </ion-item>
       </ion-toolbar>
     </ion-header>
@@ -19,10 +24,10 @@
           <ion-item (click)="scheduleClick()">Agenda</ion-item>
           <ion-item (click)="notificationClick()">Notificações</ion-item>
           <ion-item (click)="chatClick()">Chat</ion-item>
+          <ion-item (click)="serviceClick()">Serviços</ion-item>
           <ion-item (click)="configurationClick()">Configurações</ion-item>
           <ion-item (click)="logoutClick()">Sair</ion-item>
         </ion-menu-toggle>
-        
       </ion-list>
     </ion-content>
   </ion-menu>
