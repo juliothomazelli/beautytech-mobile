@@ -1,0 +1,65 @@
+.table{
+  height: calc(100vw - 8rem);
+  width: 100%;
+  table-layout: fixed;
+}
+
+.slides{
+  height: 100%;
+}
+
+.slide{
+  display: block; 
+}
+
+.day-selected{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  background-color: #5260ff;
+  border-radius: 10rem;
+  margin-left: 0.8rem;
+  margin-top: 0.8rem;
+  color: white;
+  font-size: large;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.underline-day-selected{
+  width: 93%;
+  background-color: #dedede;
+}
+
+.hour-content{
+  overflow-x: auto;
+  overflow-y: auto;
+  content: normal;
+  .month-visible{
+    height: calc(100vw - 4rem);
+  }
+  .month-invisible{
+    height: 100%;
+  }
+}
+
+.week-header{
+  height: 10%;
+  text-decoration: underline;
+}
+
+.week-days{
+  height: 2.5rem;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.week-days-color{
+  border-radius: 5rem;
+  background-color: burlywood;
+}
+
+.column{
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+}

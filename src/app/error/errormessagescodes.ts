@@ -12,6 +12,7 @@ export class ErrorMessagesCodes {
     this.errorCodes.push({error: '0003', message: 'Email e senha são requeridos para acessar o sistema.'});
     this.errorCodes.push({error: '0004', message: 'Usuário não existente ou inativo.'});
     this.errorCodes.push({error: '0006', message: 'Email ou Senha incorretos, tente novamente.'});
+    this.errorCodes.push({error: '0007', message: 'Erro ao criar, altera ou excluir um serviço, tente novamente.'});
 
     return this.errorCodes;
   }

@@ -4,10 +4,7 @@ import { RequestService } from "../http/request.service";
 
 @Injectable()
 export class LoginRest {
-  private http: HttpService;
-
-  constructor(http: HttpService){
-    this.http = http;
+  constructor(private http: HttpService){
   }
   
   public async login(object:any) {        

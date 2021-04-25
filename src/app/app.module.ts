@@ -12,6 +12,8 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WebSocketService } from './websocket/websocket.service';
+import { ServiceRest } from './rest/service.rest';
+import { ScheduleRest } from './rest/schedule.rest';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { WebSocketService } from './websocket/websocket.service';
     },
     HttpService,
     LoginRest,
-    WebSocketService
+    WebSocketService,
+    ServiceRest,
+    ScheduleRest
   ],
   bootstrap: [
     AppComponent

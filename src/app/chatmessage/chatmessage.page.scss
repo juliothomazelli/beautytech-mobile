@@ -1,0 +1,57 @@
+.input{
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  border-radius: 2rem;
+  width: calc(100vw - 4rem);
+}
+
+.flex{
+  display: flex;
+  align-items: center;  
+  height: 3rem;
+  width: calc(100vw);
+  background-color: white;
+  border-radius: 2rem;
+  padding: 0.5rem;
+}
+
+.background{
+  background-color: #e1ffc8;
+  font-size: medium;
+  padding: 0.4rem;
+  border-radius: 0.6rem;
+}
+
+.items{
+  height: 2rem;
+}
+
+.item-header{
+  overflow-x: auto;
+  background-color: aqua;
+  height: calc(100vw - 10rem);
+  padding: 0.5rem;  
+}
+
+.item-footer{
+  background-color: gray;
+  height: calc(100vw - 20rem);
+  position: fixed;
+}
+
+.background-sendby{
+  background-color: white;
+  font-size: medium;
+  padding: 0.4rem;
+  border-radius: 0.6rem;
+}
+
+.content{  
+  height: 100%;
+  width: 100%;
+  background-image: url('../../assets/chat-background.png');
+  position: absolute;
+  overflow-x: auto;
+  padding: 0;
+}

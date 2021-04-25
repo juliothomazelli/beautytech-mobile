@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuardService } from '../services/auth-guard.service';
 
-import { ChatPage } from './chat.page';
+import { NewservicePage } from './newservice.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChatPage,
-    children: [
-      
-    ]
+    component: NewservicePage
   }
 ];
 
@@ -18,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ChatPageRoutingModule {}
+export class NewservicePageRoutingModule {}

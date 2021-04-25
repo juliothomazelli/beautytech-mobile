@@ -172,4 +172,8 @@ ion-icon {
   &[name*="invert-colors"] {
     mask-image: url(./assets/icon/bt-invert-colors.svg);
   }
+
+  &[name*="edit"] {
+    mask-image: url(./assets/icon/bt-edit.svg);
+  }
 }

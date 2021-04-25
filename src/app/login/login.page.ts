@@ -4,6 +4,7 @@ import { ErrorHandling } from '../error/errorhandling';
 import { LoginRest } from '../rest/login.rest';
 import { AuthGuardService, AuthGuardServiceUtils } from '../services/auth-guard.service';
 import { ObjectUtils } from '../utils/ObjectUtils';
+import { RouterUtils } from '../utils/RouterUtils';
 import { StringUtils } from '../utils/StringUtils';
 import { ViewUtils } from '../utils/ViewUtils.service';
 
@@ -29,8 +30,6 @@ export class LoginPage implements OnInit {
   }
 
   login(){
-    
-
     if (StringUtils.isEmpty(this.username) || StringUtils.isEmpty(this.password)){
       ViewUtils.getInstance().messageToast('Atenção', 'Favor preencher Email e Senha');
       return;
@@ -48,7 +47,7 @@ export class LoginPage implements OnInit {
         }
 
         AuthGuardServiceUtils.getInstance().authentication = true;
-        this.router.navigateByUrl("/home");
+        RouterUtils.getInstance().goTo("/home");
     }).catch(
       (error) => {
         ErrorHandling.report(this.login.name, error).message(error);

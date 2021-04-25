@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Message } from '../services/message.service';
 import { BooleanUtils } from '../utils/BooleanUtils';
 import { ObjectUtils } from '../utils/ObjectUtils';
-import { WebSocketService } from '../websocket/websocket.service';
+import { RouterUtils } from '../utils/RouterUtils';
 
 @Component({
   selector: 'app-chat',
@@ -12,12 +13,19 @@ import { WebSocketService } from '../websocket/websocket.service';
 export class ChatPage implements OnInit {
   public messages : any = [];
 
-  constructor(private websocket : WebSocketService) { }
+  constructor(private router : Router) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
     this.messages = Message.getInstance().getMessages();
 
     this.setLastMessageLabel();
+  }
+
+  ionViewWillLeave(){
+    
   }
 
   setLastMessageLabel(){
@@ -42,6 +50,10 @@ export class ChatPage implements OnInit {
     }
 
     return count;
+  }
+
+  messageClick(message){
+    RouterUtils.getInstance().goTo('home/chatmessage', message)
   }
 
 }

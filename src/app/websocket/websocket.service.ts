@@ -3,6 +3,7 @@ import { HttpService } from "../http/http.service";
 import { ObjectUtils } from "../utils/ObjectUtils";
 import { StorageUtils, StorageUtilsTypes } from "../utils/StorageUtils";
 import { Message, MessageTypes } from '../services/message.service';
+import { EventEmitterService } from "../eventemitter/eventemitter.service";
 
 export enum WebSocketMessageTypes{
   CHAT         = 'CHAT',
@@ -25,14 +26,14 @@ export class WebSocketService {
     this.webSocket.onerror   = (evt: Event) => { this.onError(evt); };
   }
 
-  close() {
+  public close() {
     if (this.webSocket) {      
       this.webSocket.close();
     }
     this.webSocket = null;
   }
 
-  send(message: any) {
+  public send(message: any) {
     this.webSocket.send(JSON.stringify(message));
   }
 
@@ -53,6 +54,12 @@ export class WebSocketService {
     
     if (messageObject.Type == MessageTypes.LOAD_MESSAGES){
       Message.getInstance().setMessages(messageObject.Messages);
+    }
+
+    if (messageObject.Type == MessageTypes.NEW_MESSAGE){
+      Message.getInstance().setSpecificMessages(messageObject.Message);
+
+      // EventEmitterService.get(MessageTypes.NEW_MESSAGE).emit();
     }
   }
 

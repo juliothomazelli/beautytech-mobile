@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let message of messages">
+    <ion-item *ngFor="let message of messages" (click)="messageClick(message)">
       <ion-avatar slot="start">
         <img src="../../assets/avatar.svg">
       </ion-avatar>
@@ -23,4 +23,10 @@
       <ion-badge color="primary">{{message.MessageNotReadCount}}</ion-badge>
     </ion-item>
   </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="bt-edit"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

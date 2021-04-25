@@ -1,4 +1,5 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
+import { ObjectUtils } from '../utils/ObjectUtils';
 
 @Directive({
   selector: 'ion-input[currency-input]'
@@ -14,7 +15,11 @@ export class InputNumber {
   }
 
   @HostListener('keyup')
-  onKeyUp() {    
+  onKeyUp() {
+    if (ObjectUtils.isNullOrUndefined(this.elementRef.nativeElement.value.replace)){
+      return;
+    }
+
     let v = this.elementRef.nativeElement.value.replace(/\D/g,'');
     v = (v/100).toFixed(2) + '';
 

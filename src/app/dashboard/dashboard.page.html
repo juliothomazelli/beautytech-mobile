@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Agenda</ion-title>
+    <ion-title (click)="showMonthTitleClick()">Agenda / {{monthSelected.monthName}} {{monthSelected.year}}&nbsp;
+      <ion-icon *ngIf="!showMonth" name="chevron-down"></ion-icon>
+      <ion-icon *ngIf="showMonth" name="chevron-up"></ion-icon>
+    </ion-title>
     <ion-buttons slot="end">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -8,5 +11,167 @@
 </ion-header>
 
 <ion-content>
+  <ion-slides class="slides">
+    <ion-slide class="slide">
+      <ion-content>
+        <table *ngIf="showMonth" class="table">
+          <tr class="week-header">
+            <th class="column">
+              D
+            </th>
+            <th class="column">
+              S
+            </th>
+            <th class="column">
+              T
+            </th>
+            <th class="column">
+              Q
+            </th>
+            <th class="column">
+              Q
+            </th>
+            <th class="column">
+              S
+            </th>
+            <th class="column">
+              S
+            </th>
+          </tr>
+      
+          <tr>
+            <th class="week-days" *ngFor="let dayMonth of schedule.weekOne" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
+              {{dayMonth.day}}
+            </th>
+          </tr>
+      
+          <tr>
+            <th class="week-days" *ngFor="let dayMonth of schedule.weekTwo" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
+              {{dayMonth.day}}
+            </th>
+          </tr>
+      
+          <tr>
+            <th class="week-days" *ngFor="let dayMonth of schedule.weekThree" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
+              {{dayMonth.day}}
+            </th>
+          </tr>
+      
+          <tr>
+            <th class="week-days" *ngFor="let dayMonth of schedule.weekFour" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
+              {{dayMonth.day}}
+            </th>
+          </tr>
+      
+          <tr>
+            <th class="week-days" *ngFor="let dayMonth of schedule.weekFive" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
+              {{dayMonth.day}}
+            </th>
+          </tr>
+        </table>
+        
+        <div *ngIf="!showMonth">
+          <div class="day-selected">{{scheduleSelected.day}}</div>
+          <hr class="underline-day-selected">
+        </div>
+      
+        <div [ngClass]="{'month-visible': showMonth, 'month-invisible': !showMonth}" class="hour-content">
+          <ion-list>
+            <ion-item *ngFor="let hourItem of scheduleSelected.hourList">
+              <ion-label style="font-family: 'Times New Roman', Times, serif;">{{hourItem.hour}}</ion-label>
+            </ion-item>
+          </ion-list>  
+        </div>
+      
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+          <ion-fab-button (click)="openService()">
+            <ion-icon name="expand"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="top">
+            <ion-fab-button (click)="expandHours(true)">
+              <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="expandHours(false)">
+              <ion-icon name="remove"></ion-icon>
+            </ion-fab-button>
+          </ion-fab-list>
+        </ion-fab>
+      </ion-content>
+      
+    </ion-slide>
 
+    <ion-slide style="background-color: red;">
+      <h1>Slide 2</h1>
+    </ion-slide>
+    <ion-slide style="background-color: green;">
+      <h1>Slide 3</h1>
+    </ion-slide>
+  </ion-slides>
+
+  
+
+  <!-- <ion-reorder-group (ionItemReorder)="doReorder($event)" disabled="false">
+    <ion-item>
+      <ion-label>
+        Item 1
+      </ion-label>
+      <ion-reorder slot="end"></ion-reorder>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>
+        Item 2
+      </ion-label>
+      <ion-reorder slot="end"></ion-reorder>
+    </ion-item>
+  
+    <ion-item>
+      <ion-reorder slot="start"></ion-reorder>
+      <ion-label>
+        Item 3
+      </ion-label>
+    </ion-item>
+  
+    <ion-item>
+      <ion-reorder slot="start"></ion-reorder>
+      <ion-label>
+        Item 4
+      </ion-label>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>
+        Item 5
+      </ion-label>
+      <ion-reorder slot="end">
+        <ion-icon name="pizza"></ion-icon>
+      </ion-reorder>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label>
+        Item 6
+      </ion-label>
+      <ion-reorder slot="end">
+        <ion-icon name="pizza"></ion-icon>
+      </ion-reorder>
+    </ion-item>
+  
+    <ion-reorder>
+      <ion-item>
+        <ion-label>
+          Item 7
+        </ion-label>
+      </ion-item>
+    </ion-reorder>
+  
+    <ion-reorder>
+      <ion-item>
+        <ion-label>
+          Item 8
+        </ion-label>
+      </ion-item>
+    </ion-reorder>
+  </ion-reorder-group> -->
+  
 </ion-content>

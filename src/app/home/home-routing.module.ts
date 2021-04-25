@@ -33,6 +33,16 @@ const routes: Routes = [
         path: 'service',
         loadChildren: () => import('../service/service.module').then( m => m.ServicePageModule),
         canActivate: [AuthGuardService]
+      },
+      {
+        path: 'chatmessage',
+        loadChildren: () => import('../chatmessage/chatmessage.module').then( m => m.ChatmessagePageModule),
+        canActivate: [AuthGuardService]
+      },
+      {
+        path: 'newservice',
+        loadChildren: () => import('../newservice/newservice.module').then( m => m.NewservicePageModule),
+        canActivate: [AuthGuardService]
       }
     ]
   }

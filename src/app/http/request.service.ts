@@ -16,7 +16,7 @@ export class RequestService {
         return response.body;
       }
       
-      return JSON.parse(response.body);
+      return response.body;
     } catch (error) {
       throw (error);
     }

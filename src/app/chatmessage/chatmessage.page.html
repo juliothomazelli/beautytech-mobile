@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{message.Name}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home/chat"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="p-4 content">
+    <div class="item-header" #commentEl [scrollTop]="scrolltop">
+      <div *ngFor="let message of message.Messages">
+        <div class="items">
+          <div class="align-left" *ngIf="message.Send_By !== fkUser">
+            <label class="background-sendby">{{message.Message}}</label>
+          </div>
+    
+          <div class="align-right" *ngIf="message.Send_By === fkUser">
+            <label class="background">{{message.Message}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-footer">
+      <div class="flex">
+        <ion-input #focus [(ngModel)]="messageWrite" placeholder="Digite uma mensagem"><ion-icon name="happy-outline" class="default-icon"></ion-icon></ion-input>
+        <ion-icon class="default-icon" name="send" (click)="messageSend()"></ion-icon>
+      </div>
+    </div>
+  </div>
+  
+</ion-content>

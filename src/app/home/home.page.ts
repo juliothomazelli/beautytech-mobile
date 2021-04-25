@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ObjectUtils } from '../utils/ObjectUtils';
+import { RouterUtils } from '../utils/RouterUtils';
 import { StorageUtils, StorageUtilsTypes } from '../utils/StorageUtils';
 import { WebSocketService } from '../websocket/websocket.service';
 
@@ -15,7 +16,7 @@ export class HomePage implements OnInit {
   constructor(private router : Router, private websocket: WebSocketService) { }
 
   ngOnInit() {
-    this.router.navigateByUrl('home/dashboard');
+    RouterUtils.getInstance().goTo('home/dashboard');
 
     const userInfo = StorageUtils.getDataJSON(StorageUtilsTypes.userInfo);
     

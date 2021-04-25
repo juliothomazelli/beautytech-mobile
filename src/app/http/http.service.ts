@@ -2,10 +2,11 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { timeout } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { ObjectUtils } from "../utils/ObjectUtils";
+import { StorageUtils, StorageUtilsTypes } from "../utils/StorageUtils";
 
 @Injectable()
 export class HttpService {
-  private isOnlineBuild = false;  
+  private isOnlineBuild = true;  
 
   private TIMEOUT       = 15000;
 
@@ -21,15 +22,17 @@ export class HttpService {
     headers = headers.set('Cache-Control', 'no-cache');
 
     headers = headers.set('Content-Type', 'application/json');
-    
-    headers = headers.set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJLZXkiOiI0MUM3NTYxMEREMDc0RDEyOTEzRENGQkI2RDJDMjg5MCIsImlhdCI6MTYxNjI3MTY3NiwiZXhwIjoxNjE2MzA3Njc2fQ.04ivMDFavpsoFwQBlLMuDCtnMo8jJQcCnoaZcDkGaFE');
+  
+    if (!ObjectUtils.isNullOrUndefined(StorageUtils.getData(StorageUtilsTypes.sessionToken))){
+      headers = headers.set('authorization', StorageUtils.getData(StorageUtilsTypes.sessionToken));
+    }
 
     return headers;
   }
 
   public getBaseUrl() : string {
     if (this.isOnlineBuild){
-      return 'URL Online';
+      return 'http://192.168.0.12:3000/';
     } else {
       return 'http://localhost:3000/';
     }
@@ -37,7 +40,7 @@ export class HttpService {
 
   public getWssBaseUrl() : string {
     if (this.isOnlineBuild){
-      return 'wss online';
+      return 'ws://192.168.0.12:8080/';
     } else {
       return 'ws://localhost:8080';
     }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { ObjectUtils } from './utils/ObjectUtils';
+import { RouterUtils } from './utils/RouterUtils';
 import { WebSocketService } from './websocket/websocket.service';
 
 @Component({
@@ -12,26 +13,28 @@ import { WebSocketService } from './websocket/websocket.service';
 export class AppComponent {
   public showColorRange = false;
 
-  constructor(private router : Router, private websocket : WebSocketService) {}
+  constructor(private router : Router, private websocket : WebSocketService, private navCtrl : NavController) {
+    RouterUtils.getInstance().setNavCtrl(this.navCtrl);
+  }
 
   scheduleClick(){
-    this.router.navigateByUrl('home/dashboard');
+    RouterUtils.getInstance().goTo('home/dashboard');
   }
 
   notificationClick(){
-    this.router.navigateByUrl('home/notification');
+    RouterUtils.getInstance().goTo('home/notification');
   }
 
   chatClick(){
-    this.router.navigateByUrl('home/chat');
+    RouterUtils.getInstance().goTo('home/chat');
   }
 
   serviceClick(){
-    this.router.navigateByUrl('home/service');
+    RouterUtils.getInstance().goTo('home/service');
   }
 
   configurationClick(){
-    this.router.navigateByUrl('home/configuration');
+    RouterUtils.getInstance().goTo('home/configuration');
   }
 
   colorRangeVisibility(){
@@ -40,6 +43,6 @@ export class AppComponent {
 
   logoutClick(){
     this.websocket.close();
-    this.router.navigateByUrl('');
+    RouterUtils.getInstance().goTo('');
   }
 }
