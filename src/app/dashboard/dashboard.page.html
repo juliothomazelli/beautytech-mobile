@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title (click)="showMonthTitleClick()">Agenda / {{monthSelected.monthName}} {{monthSelected.year}}&nbsp;
+    <ion-title (click)="showMonthTitleClick()">Agenda / {{scheduleSelected.monthName}} {{scheduleSelected.year}}&nbsp;
       <ion-icon *ngIf="!showMonth" name="chevron-down"></ion-icon>
       <ion-icon *ngIf="showMonth" name="chevron-up"></ion-icon>
     </ion-title>
@@ -11,8 +11,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides class="slides">
-    <ion-slide class="slide">
+  <ion-slides class="slides" [options]="slideOpts" (ionSlideDidChange)="monthChange()">
+    <ion-slide class="slide" *ngFor="let item of schedule">
       <ion-content>
         <table *ngIf="showMonth" class="table">
           <tr class="week-header">
@@ -40,32 +40,8 @@
           </tr>
       
           <tr>
-            <th class="week-days" *ngFor="let dayMonth of schedule.weekOne" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
-              {{dayMonth.day}}
-            </th>
-          </tr>
-      
-          <tr>
-            <th class="week-days" *ngFor="let dayMonth of schedule.weekTwo" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
-              {{dayMonth.day}}
-            </th>
-          </tr>
-      
-          <tr>
-            <th class="week-days" *ngFor="let dayMonth of schedule.weekThree" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
-              {{dayMonth.day}}
-            </th>
-          </tr>
-      
-          <tr>
-            <th class="week-days" *ngFor="let dayMonth of schedule.weekFour" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
-              {{dayMonth.day}}
-            </th>
-          </tr>
-      
-          <tr>
-            <th class="week-days" *ngFor="let dayMonth of schedule.weekFive" [ngClass]="{'week-days-color': dayMonth.selected}" (click)="selectDay(dayMonth.day, dayMonth.nextMonth, dayMonth.previousMonth)">
-              {{dayMonth.day}}
+            <th>
+              
             </th>
           </tr>
         </table>
@@ -76,11 +52,13 @@
         </div>
       
         <div [ngClass]="{'month-visible': showMonth, 'month-invisible': !showMonth}" class="hour-content">
-          <ion-list>
-            <ion-item *ngFor="let hourItem of scheduleSelected.hourList">
-              <ion-label style="font-family: 'Times New Roman', Times, serif;">{{hourItem.hour}}</ion-label>
-            </ion-item>
-          </ion-list>  
+          <ion-virtual-scroll [items]="scheduleSelected.hourList">
+            <div *virtualItem="let item; let itemBounds = bounds;">
+              <ion-item>
+                <ion-label style="font-family: 'Times New Roman', Times, serif;">{{item.hour}}</ion-label>
+              </ion-item>
+            </div>
+          </ion-virtual-scroll>
         </div>
       
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
@@ -98,14 +76,7 @@
         </ion-fab>
       </ion-content>
       
-    </ion-slide>
-
-    <ion-slide style="background-color: red;">
-      <h1>Slide 2</h1>
-    </ion-slide>
-    <ion-slide style="background-color: green;">
-      <h1>Slide 3</h1>
-    </ion-slide>
+    </ion-slide>    
   </ion-slides>
 
   

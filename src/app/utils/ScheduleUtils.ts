@@ -3,119 +3,221 @@ import { ObjectUtils } from "./ObjectUtils";
 
 export class ScheduleUtils {
 
-  public static generateSchedule(year: number, month: number){
-    let daysOfMonth = ScheduleUtils.makeDaysOfMonth(year, month);
+  private  getYear(monthSec, year, month){
+    if (monthSec == 1){
+      if (month == 0 || month == 1){
+        return year - 1;
+      }
 
-    let scheduleMonth : any = {
-      firstWeekDay : ScheduleUtils.getFirstDayWeek(year, month),
-      weekOne: [],
-      weekTwo: [],
-      weekThree: [],
-      weekFour: [],
-      weekFive: [],
+      return year;
     }
-    
-    //? Criar os dias do mês anterior
-    if (scheduleMonth.firstWeekDay != 0){
-      let previousMonth = month;
-      let previousYear  = year;
 
-      //? Se for JANEIRO
+    if (monthSec == 2){
       if (month == 0){
-        previousMonth = 11;
-        previousYear  = year - 1;
-      } else {
-        previousMonth = month - 1;
-      }
-      
-      let daysPreviousMonth = DateUtils.getNumberDaysOfMonth(new Date(previousYear, previousMonth));
-
-      for (let i = 0; i < scheduleMonth.firstWeekDay; i++) {
-        let schedule = {
-          day: daysPreviousMonth - i,
-          month: previousMonth,
-          year: previousYear,
-          hourList: ScheduleUtils.createHourOfDayList(),
-          selected: false,
-          previousMonth: true,
-          nextMonth: false
-        }
-
-        scheduleMonth.weekOne.push(schedule);
+        return year - 1;
       }
 
-      scheduleMonth.weekOne.sort(function(a, b){return parseFloat(a.day) - parseFloat(b.day);});
+      return year;
     }
 
-    for (const day of daysOfMonth){
-      let schedule = {
-        day: day,
-        month: month,
-        year: year,
-        hourList: ScheduleUtils.createHourOfDayList(),
-        selected: false,
-        previousMonth: false,
-        nextMonth: false
+    if (monthSec == 4){
+      if (month == 11){
+        return year + 1;
       }
 
-      if (scheduleMonth.weekOne.length < 7){
-        scheduleMonth.weekOne.push(schedule);
-        continue;
-      }
-
-      if (scheduleMonth.weekTwo.length < 7){
-        scheduleMonth.weekTwo.push(schedule);
-        continue;
-      }
-
-      if (scheduleMonth.weekThree.length < 7){
-        scheduleMonth.weekThree.push(schedule);
-        continue;
-      }
-      
-      if (scheduleMonth.weekFour.length < 7){
-        scheduleMonth.weekFour.push(schedule);
-        continue;
-      }
-      
-      if (scheduleMonth.weekFive.length < 7){
-        scheduleMonth.weekFive.push(schedule);
-      }
+      return year;
     }
 
-    let nextMonth = month;
-    let nextYear  = year;
-
-    //? Se for DEZEMBRO
-    if (month == 11){
-      nextMonth = 0;
-      nextYear  = year + 1;
-    } else {
-      nextMonth = month + 1;
-    }
-    
-    for (let i = 1; i <= 7 - scheduleMonth.weekFive.length; i++) {
-      let schedule = {
-        day: i,
-        month: nextMonth,
-        year: nextYear,
-        hourList: ScheduleUtils.createHourOfDayList(),
-        selected: false,
-        previousMonth: false,
-        nextMonth: true
+    if (monthSec == 5){
+      if (month == 10 || month == 11){
+        return year + 1;
       }
 
-      scheduleMonth.weekFive.push(schedule);
+      return year;
     }
-    
-    return scheduleMonth;
   }
 
-  private static getFirstDayWeek(year, month){
+  private getMonthList(year: number, month: number){
+    let result : any = {};
+
+    result.one = {
+      year: this.getYear(1, year, month),
+      month: undefined,
+      firstWeekDay: undefined
+    }
+
+    result.two = {
+      year: this.getYear(2, year, month),
+      month: undefined,
+      firstWeekDay: undefined
+    }
+
+    result.three = {
+      year: year,
+      month: month,
+      firstWeekDay: this.getFirstDayWeek(year, month)
+    }
+
+    result.four = {
+      year: this.getYear(4, year, month),
+      month: undefined,
+      firstWeekDay: undefined
+    }
+
+    result.five = {
+      year: this.getYear(5, year, month),
+      month: undefined,
+      firstWeekDay: undefined
+    }
+  }
+
+  public generateSchedule(year: number, month: number){
+    let monthList = this.getMonthList(year, month);
+    
+    // let daysOfMonth = ScheduleUtils.makeDaysOfMonth(year, month);
+
+    // let scheduleMonth : any = {
+    //   firstWeekDay : ScheduleUtils.getFirstDayWeek(year, month),
+    //   weekOne: [],
+    //   weekTwo: [],
+    //   weekThree: [],
+    //   weekFour: [],
+    //   weekFive: [],
+    //   weekSix: []
+    // }
+    
+    // //? Criar os dias do mês anterior
+    // if (scheduleMonth.firstWeekDay != 0){
+    //   let previousMonth = month;
+    //   let previousYear  = year;
+
+    //   //? Se for JANEIRO
+    //   if (month == 0){
+    //     previousMonth = 11;
+    //     previousYear  = year - 1;
+    //   } else {
+    //     previousMonth = month - 1;
+    //   }
+      
+    //   let daysPreviousMonth = DateUtils.getNumberDaysOfMonth(new Date(previousYear, previousMonth));
+
+    //   for (let i = 0; i < scheduleMonth.firstWeekDay; i++) {
+    //     let schedule = {
+    //       day: daysPreviousMonth - i,
+    //       month: previousMonth,
+    //       year: previousYear,
+    //       hourList: ScheduleUtils.createHourOfDayList(),
+    //       selected: false,
+    //       previousMonth: true,
+    //       nextMonth: false,
+    //       monthName: DateUtils.getMonth(previousMonth, true)
+    //     }
+
+    //     scheduleMonth.weekOne.push(schedule);
+    //   }
+
+    //   scheduleMonth.weekOne.sort(function(a, b){return parseFloat(a.day) - parseFloat(b.day);});
+    // }
+
+    // for (const day of daysOfMonth){
+    //   let schedule = {
+    //     day: day,
+    //     month: month,
+    //     year: year,
+    //     hourList: ScheduleUtils.createHourOfDayList(),
+    //     selected: false,
+    //     previousMonth: false,
+    //     nextMonth: false,
+    //     monthName: DateUtils.getMonth(month, true)
+    //   }
+
+    //   if (scheduleMonth.weekOne.length < 7){
+    //     scheduleMonth.weekOne.push(schedule);
+    //     continue;
+    //   }
+
+    //   if (scheduleMonth.weekTwo.length < 7){
+    //     scheduleMonth.weekTwo.push(schedule);
+    //     continue;
+    //   }
+
+    //   if (scheduleMonth.weekThree.length < 7){
+    //     scheduleMonth.weekThree.push(schedule);
+    //     continue;
+    //   }
+      
+    //   if (scheduleMonth.weekFour.length < 7){
+    //     scheduleMonth.weekFour.push(schedule);
+    //     continue;
+    //   }
+      
+    //   if (scheduleMonth.weekFive.length < 7){
+    //     scheduleMonth.weekFive.push(schedule);
+    //     continue;
+    //   }
+
+    //   if (scheduleMonth.weekSix.length < 7){
+    //     scheduleMonth.weekSix.push(schedule);
+    //   }
+    // }
+
+    // let nextMonth = month;
+    // let nextYear  = year;
+
+    // //? Se for DEZEMBRO
+    // if (month == 11){
+    //   nextMonth = 0;
+    //   nextYear  = year + 1;
+    // } else {
+    //   nextMonth = month + 1;
+    // }
+    
+    // let count = 0;
+    
+    // let fireLength = scheduleMonth.weekFive.length;
+    // for (let i = 1; i <= 7 - fireLength; i++){
+    //   count = count + 1;
+
+    //   let schedule = {
+    //     day: count,
+    //     month: nextMonth,
+    //     year: nextYear,
+    //     hourList: ScheduleUtils.createHourOfDayList(),
+    //     selected: false,
+    //     previousMonth: false,
+    //     nextMonth: true,
+    //     monthName: DateUtils.getMonth(nextMonth, true)
+    //   }
+
+    //   scheduleMonth.weekFive.push(schedule);
+    // }
+
+    // let sixLength = scheduleMonth.weekSix.length;
+    // for (let i = 1; i <= 7 - sixLength; i++) {
+    //   count = count + 1;
+      
+    //   let schedule = {
+    //     day: count,
+    //     month: nextMonth,
+    //     year: nextYear,
+    //     hourList: ScheduleUtils.createHourOfDayList(),
+    //     selected: false,
+    //     previousMonth: false,
+    //     nextMonth: true,
+    //     monthName: DateUtils.getMonth(nextMonth, true)
+    //   }
+
+    //   scheduleMonth.weekSix.push(schedule);
+    // }
+    
+    // return scheduleMonth;
+  }
+
+  private getFirstDayWeek(year, month){
     return new Date(year, month).getDay();
   }
 
-  private static makeDaysOfMonth(year: number, month: number){
+  private makeDaysOfMonth(year: number, month: number){
     let numberDaysOfMonth = DateUtils.getNumberDaysOfMonth(new Date(year, month));
     
     let result = [];
@@ -127,7 +229,7 @@ export class ScheduleUtils {
     return result;
   }
 
-  public static createHourOfDayList(){
+  public createHourOfDayList(){
     return [
       {
         hour: '00:00',
