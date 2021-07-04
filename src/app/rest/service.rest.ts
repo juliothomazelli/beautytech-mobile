@@ -18,9 +18,9 @@ export class ServiceRest {
       return;
     }
 
-    let queryString = '?fkcompany=' + userInfo.FkCompany;
+    let queryString = '?fkuser=' + userInfo.Key;
 
-    this.http.URL = this.http.getBaseUrl() + 'service' + queryString;
+    this.http.URL = this.http.getBaseUrl() + 'service/user' + queryString;
     return RequestService.get(this.http);
   }
 

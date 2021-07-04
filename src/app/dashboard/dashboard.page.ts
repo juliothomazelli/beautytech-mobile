@@ -122,99 +122,121 @@ export class DashboardPage implements OnInit {
   }
 
   generateSchedule(year, month){
-    this.schedule = new ScheduleUtils().generateSchedule(year, 11);
+    this.schedule = new ScheduleUtils().generateSchedule(year, month);
 
-    this.selectDay(new Date().getDate(), false, false);
+    console.log(this.schedule)
+    this.selectDay(new Date(), new Date().getMonth(), 3);
   }
 
-  selectDay(date: number, nextMonth, previousMonth){
+  selectDay(date: Date, monthSelected, weekChanged){
     this.uncheckDay();
 
-    for (const week of this.schedule[1].weekOne){
-      if ((week.day != date) || (week.day == date && nextMonth) || (week.day == date && !previousMonth && !nextMonth && date > 7)){
+    for (const month of this.schedule){
+      if (month.month != monthSelected){
         continue;
       }
 
-      week.selected = true;
-      this.scheduleSelected = week;
-      return;
-    }
+      if (weekChanged == 1){
+        for (const week of month.weekOne){
+          if (week.day != date.getDate()){
+            continue;
+          }
 
-    for (const week of this.schedule[1].weekTwo){      
-      if (week.day != date || (week.day == date && nextMonth) || (week.day == date && !previousMonth && !nextMonth && date > 7)){
-        continue;
+          week.selected = true;
+          this.scheduleSelected = week;
+          return;
+        }
       }
 
-      week.selected = true;
-      this.scheduleSelected = week;
-      return;
-    }
+      if (weekChanged == 2){
+        for (const week of month.weekTwo){
+          if (week.day != date.getDate()){
+            continue;
+          }
 
-    for (const week of this.schedule[1].weekThree){
-      if (week.day != date){
-        continue;
+          week.selected = true;
+          this.scheduleSelected = week;
+          return;
+        }
       }
 
-      week.selected = true;
-      this.scheduleSelected = week;
-      return;
-    }
+      if (weekChanged == 3){
+        for (const week of month.weekThree){
+          if (week.day != date.getDate()){
+            continue;
+          }
 
-    for (const week of this.schedule[1].weekFour){
-      if (week.day != date){
-        continue;
+          week.selected = true;
+          this.scheduleSelected = week;
+          return;
+        }
       }
 
-      week.selected = true;
-      this.scheduleSelected = week;
-      return;
-    }
+      if (weekChanged == 4){
+        for (const week of month.weekFour){
+          if (week.day != date.getDate()){
+            continue;
+          }
 
-    for (const week of this.schedule[1].weekFive){
-      if (week.day != date){
-        continue;
+          week.selected = true;
+          this.scheduleSelected = week;
+          return;
+        }
       }
 
-      week.selected = true;
-      this.scheduleSelected = week;
-      return;
-    }
+      if (weekChanged == 5){
+        for (const week of month.weekFive){
+          if (week.day != date.getDate()){
+            continue;
+          }
 
-    for (const week of this.schedule[1].weekSix){
-      if (week.day != date){
-        continue;
+          week.selected = true;
+          this.scheduleSelected = week;
+          return;
+        }
       }
 
-      week.selected = true;
-      this.scheduleSelected = week;
-      return;
+      if (weekChanged == 6){
+        for (const week of month.weekSix){
+          if (week.day != date.getDate()){
+            continue;
+          }
+
+          week.selected = true;
+          this.scheduleSelected = week;
+          return;
+        }
+      }
     }
   }
 
   uncheckDay(){
-    for (const week of this.schedule[1].weekOne){
-      week.selected = false;
+    for (const month of this.schedule){
+      for (const week of month.weekOne){
+        week.selected = false;
+      }
+  
+      for (const week of month.weekTwo){      
+        week.selected = false;
+      }
+  
+      for (const week of month.weekThree){
+        week.selected = false;
+      }
+  
+      for (const week of month.weekFour){
+        week.selected = false;
+      }
+  
+      for (const week of month.weekFive){
+        week.selected = false;
+      }
+  
+      for (const week of month.weekSix){
+        week.selected = false;
+      }
     }
-
-    for (const week of this.schedule[1].weekTwo){      
-      week.selected = false;
-    }
-
-    for (const week of this.schedule[1].weekThree){
-      week.selected = false;
-    }
-
-    for (const week of this.schedule[1].weekFour){
-      week.selected = false;
-    }
-
-    for (const week of this.schedule[1].weekFive){
-      week.selected = false;
-    }
-
-    for (const week of this.schedule[1].weekSix){
-      week.selected = false;
-    }
+    
   }
 
   showMonthTitleClick(){
@@ -242,8 +264,6 @@ export class DashboardPage implements OnInit {
       year: new Date().getFullYear(),
       hourList: new ScheduleUtils().createHourOfDayList(),
       selected: false,
-      previousMonth: false,
-      nextMonth: false,
       monthName: DateUtils.getMonth(new Date().getMonth(), true)
     }
   }

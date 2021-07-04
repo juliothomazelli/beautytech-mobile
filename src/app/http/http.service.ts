@@ -6,7 +6,7 @@ import { StorageUtils, StorageUtilsTypes } from "../utils/StorageUtils";
 
 @Injectable()
 export class HttpService {
-  private isOnlineBuild = true;  
+  private isOnlineBuild = false;  
 
   private TIMEOUT       = 15000;
 

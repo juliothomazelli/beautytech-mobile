@@ -3,7 +3,7 @@ import { ObjectUtils } from "./ObjectUtils";
 
 export class ScheduleUtils {
 
-  private  getYear(monthSec, year, month){
+  private getYear(monthSec, year, month){
     if (monthSec == 1){
       if (month == 0 || month == 1){
         return year - 1;
@@ -17,6 +17,10 @@ export class ScheduleUtils {
         return year - 1;
       }
 
+      return year;
+    }
+
+    if (monthSec == 3){
       return year;
     }
 
@@ -37,180 +41,197 @@ export class ScheduleUtils {
     }
   }
 
-  private getMonthList(year: number, month: number){
-    let result : any = {};
+  private getMonth(monthSec, month){
+    if (monthSec == 1){
+      if (month == 0){
+        return 10;
+      }
 
-    result.one = {
-      year: this.getYear(1, year, month),
-      month: undefined,
-      firstWeekDay: undefined
+      if (month == 1){
+        return 11;
+      }
+
+      return month - 2;
     }
 
-    result.two = {
-      year: this.getYear(2, year, month),
-      month: undefined,
-      firstWeekDay: undefined
+    if (monthSec == 2){
+      if (month == 0){
+        return 11;
+      }
+
+      return month - 1;
     }
 
-    result.three = {
-      year: year,
-      month: month,
-      firstWeekDay: this.getFirstDayWeek(year, month)
+    if (monthSec == 3){
+      return month;
     }
 
-    result.four = {
-      year: this.getYear(4, year, month),
-      month: undefined,
-      firstWeekDay: undefined
+    if (monthSec == 4){
+      if (month == 11){
+        return 0;
+      }
+
+      return month + 1;
     }
 
-    result.five = {
-      year: this.getYear(5, year, month),
-      month: undefined,
-      firstWeekDay: undefined
+    if (monthSec == 5){
+      if (month == 10){
+        return 0;
+      }
+
+      if (month == 11){
+        return 1;
+      }
+
+      return month + 2;
     }
   }
 
   public generateSchedule(year: number, month: number){
-    let monthList = this.getMonthList(year, month);
+    let scheduleMonthList = [];
+
+    for (let i = 1; i < 6; i++) {
+      let newYear  = this.getYear(i, year, month);
+      let newMonth = this.getMonth(i, month)     ;
+
+      let daysOfMonth = this.makeDaysOfMonth(newYear, newMonth);
+
+      let scheduleMonth : any = {
+        firstWeekDay : this.getFirstDayWeek(newYear, newMonth),
+        year: newYear,
+        month: newMonth,
+        weekOne: [],
+        weekTwo: [],
+        weekThree: [],
+        weekFour: [],
+        weekFive: [],
+        weekSix: []
+      }
+
+      //? Criar os dias do mês anterior
+      if (scheduleMonth.firstWeekDay != 0){
+        let previousMonth = newMonth;
+        let previousYear  = newYear;
+
+        //? Se for JANEIRO
+        if (newMonth == 0){
+          previousMonth = 11;
+          previousYear  = newYear - 1;
+        } else {
+          previousMonth = newMonth - 1;
+        }
+        
+        let daysPreviousMonth = DateUtils.getNumberDaysOfMonth(new Date(previousYear, previousMonth));
+
+        for (let i = 0; i < scheduleMonth.firstWeekDay; i++) {
+          let schedule = {
+            day: daysPreviousMonth - i,
+            atomicDay: new Date(previousYear, previousMonth, daysPreviousMonth - i),
+            month: previousMonth,
+            year: previousYear,
+            hourList: this.createHourOfDayList(),
+            selected: false,
+            monthName: DateUtils.getMonth(previousMonth, true)
+          }
+
+          scheduleMonth.weekOne.push(schedule);
+        }
+
+        scheduleMonth.weekOne.sort(function(a, b){return parseFloat(a.day) - parseFloat(b.day);});
+      }
+
+      for (const day of daysOfMonth){
+        let schedule = {
+          day: day,
+          atomicDay: new Date(newYear, newMonth, day),
+          month: newMonth,
+          year: newYear,
+          hourList: this.createHourOfDayList(),
+          selected: false,
+          monthName: DateUtils.getMonth(newMonth, true)
+        }
+
+        if (scheduleMonth.weekOne.length < 7){
+          scheduleMonth.weekOne.push(schedule);
+          continue;
+        }
+
+        if (scheduleMonth.weekTwo.length < 7){
+          scheduleMonth.weekTwo.push(schedule);
+          continue;
+        }
+
+        if (scheduleMonth.weekThree.length < 7){
+          scheduleMonth.weekThree.push(schedule);
+          continue;
+        }
+        
+        if (scheduleMonth.weekFour.length < 7){
+          scheduleMonth.weekFour.push(schedule);
+          continue;
+        }
+        
+        if (scheduleMonth.weekFive.length < 7){
+          scheduleMonth.weekFive.push(schedule);
+          continue;
+        }
+
+        if (scheduleMonth.weekSix.length < 7){
+          scheduleMonth.weekSix.push(schedule);
+        }
+      }
+
+      let nextMonth = newMonth;
+      let nextYear  = newYear;
+
+      //? Se for DEZEMBRO
+      if (newMonth == 11){
+        nextMonth = 0;
+        nextYear  = newYear + 1;
+      } else {
+        nextMonth = newMonth + 1;
+      }
+
+      let count = 0;
+
+      let fireLength = scheduleMonth.weekFive.length;
+      for (let i = 1; i <= 7 - fireLength; i++){
+        count = count + 1;
+
+        let schedule = {
+          day: count,
+          atomicDay: new Date(nextYear, nextMonth, count),
+          month: nextMonth,
+          year: nextYear,
+          hourList: this.createHourOfDayList(),
+          selected: false,
+          monthName: DateUtils.getMonth(nextMonth, true)
+        }
+
+        scheduleMonth.weekFive.push(schedule);
+      }
+
+      let sixLength = scheduleMonth.weekSix.length;
+      for (let i = 1; i <= 7 - sixLength; i++) {
+        count = count + 1;
+        
+        let schedule = {
+          day: count,
+          atomicDay: new Date(nextYear, nextMonth, count),
+          month: nextMonth,
+          year: nextYear,
+          hourList: this.createHourOfDayList(),
+          selected: false,
+          monthName: DateUtils.getMonth(nextMonth, true)
+        }
+
+        scheduleMonth.weekSix.push(schedule);
+      }
+
+      scheduleMonthList.push(scheduleMonth);
+    }
     
-    // let daysOfMonth = ScheduleUtils.makeDaysOfMonth(year, month);
-
-    // let scheduleMonth : any = {
-    //   firstWeekDay : ScheduleUtils.getFirstDayWeek(year, month),
-    //   weekOne: [],
-    //   weekTwo: [],
-    //   weekThree: [],
-    //   weekFour: [],
-    //   weekFive: [],
-    //   weekSix: []
-    // }
-    
-    // //? Criar os dias do mês anterior
-    // if (scheduleMonth.firstWeekDay != 0){
-    //   let previousMonth = month;
-    //   let previousYear  = year;
-
-    //   //? Se for JANEIRO
-    //   if (month == 0){
-    //     previousMonth = 11;
-    //     previousYear  = year - 1;
-    //   } else {
-    //     previousMonth = month - 1;
-    //   }
-      
-    //   let daysPreviousMonth = DateUtils.getNumberDaysOfMonth(new Date(previousYear, previousMonth));
-
-    //   for (let i = 0; i < scheduleMonth.firstWeekDay; i++) {
-    //     let schedule = {
-    //       day: daysPreviousMonth - i,
-    //       month: previousMonth,
-    //       year: previousYear,
-    //       hourList: ScheduleUtils.createHourOfDayList(),
-    //       selected: false,
-    //       previousMonth: true,
-    //       nextMonth: false,
-    //       monthName: DateUtils.getMonth(previousMonth, true)
-    //     }
-
-    //     scheduleMonth.weekOne.push(schedule);
-    //   }
-
-    //   scheduleMonth.weekOne.sort(function(a, b){return parseFloat(a.day) - parseFloat(b.day);});
-    // }
-
-    // for (const day of daysOfMonth){
-    //   let schedule = {
-    //     day: day,
-    //     month: month,
-    //     year: year,
-    //     hourList: ScheduleUtils.createHourOfDayList(),
-    //     selected: false,
-    //     previousMonth: false,
-    //     nextMonth: false,
-    //     monthName: DateUtils.getMonth(month, true)
-    //   }
-
-    //   if (scheduleMonth.weekOne.length < 7){
-    //     scheduleMonth.weekOne.push(schedule);
-    //     continue;
-    //   }
-
-    //   if (scheduleMonth.weekTwo.length < 7){
-    //     scheduleMonth.weekTwo.push(schedule);
-    //     continue;
-    //   }
-
-    //   if (scheduleMonth.weekThree.length < 7){
-    //     scheduleMonth.weekThree.push(schedule);
-    //     continue;
-    //   }
-      
-    //   if (scheduleMonth.weekFour.length < 7){
-    //     scheduleMonth.weekFour.push(schedule);
-    //     continue;
-    //   }
-      
-    //   if (scheduleMonth.weekFive.length < 7){
-    //     scheduleMonth.weekFive.push(schedule);
-    //     continue;
-    //   }
-
-    //   if (scheduleMonth.weekSix.length < 7){
-    //     scheduleMonth.weekSix.push(schedule);
-    //   }
-    // }
-
-    // let nextMonth = month;
-    // let nextYear  = year;
-
-    // //? Se for DEZEMBRO
-    // if (month == 11){
-    //   nextMonth = 0;
-    //   nextYear  = year + 1;
-    // } else {
-    //   nextMonth = month + 1;
-    // }
-    
-    // let count = 0;
-    
-    // let fireLength = scheduleMonth.weekFive.length;
-    // for (let i = 1; i <= 7 - fireLength; i++){
-    //   count = count + 1;
-
-    //   let schedule = {
-    //     day: count,
-    //     month: nextMonth,
-    //     year: nextYear,
-    //     hourList: ScheduleUtils.createHourOfDayList(),
-    //     selected: false,
-    //     previousMonth: false,
-    //     nextMonth: true,
-    //     monthName: DateUtils.getMonth(nextMonth, true)
-    //   }
-
-    //   scheduleMonth.weekFive.push(schedule);
-    // }
-
-    // let sixLength = scheduleMonth.weekSix.length;
-    // for (let i = 1; i <= 7 - sixLength; i++) {
-    //   count = count + 1;
-      
-    //   let schedule = {
-    //     day: count,
-    //     month: nextMonth,
-    //     year: nextYear,
-    //     hourList: ScheduleUtils.createHourOfDayList(),
-    //     selected: false,
-    //     previousMonth: false,
-    //     nextMonth: true,
-    //     monthName: DateUtils.getMonth(nextMonth, true)
-    //   }
-
-    //   scheduleMonth.weekSix.push(schedule);
-    // }
-    
-    // return scheduleMonth;
+    return scheduleMonthList;
   }
 
   private getFirstDayWeek(year, month){

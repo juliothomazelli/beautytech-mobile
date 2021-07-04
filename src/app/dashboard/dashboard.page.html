@@ -16,32 +16,62 @@
       <ion-content>
         <table *ngIf="showMonth" class="table">
           <tr class="week-header">
-            <th class="column">
+            <th>
               D
             </th>
-            <th class="column">
+            <th>
               S
             </th>
-            <th class="column">
+            <th>
               T
             </th>
-            <th class="column">
+            <th>
               Q
             </th>
-            <th class="column">
+            <th>
               Q
             </th>
-            <th class="column">
+            <th>
               S
             </th>
-            <th class="column">
+            <th>
               S
             </th>
           </tr>
       
           <tr>
-            <th>
-              
+            <th class="week-days" *ngFor="let dayWeek of item.weekOne" [ngClass]="{'week-days-color': dayWeek.selected}" (click)="selectDay(dayWeek.atomicDay, item.month, 1)">
+              <label>{{dayWeek.day}}</label>
+            </th>
+          </tr>
+
+          <tr>
+            <th class="week-days" *ngFor="let dayWeek of item.weekTwo" [ngClass]="{'week-days-color': dayWeek.selected}" (click)="selectDay(dayWeek.atomicDay, item.month, 2)">
+              <label>{{dayWeek.day}}</label>
+            </th>
+          </tr>
+
+          <tr>
+            <th class="week-days" *ngFor="let dayWeek of item.weekThree" [ngClass]="{'week-days-color': dayWeek.selected}" (click)="selectDay(dayWeek.atomicDay, item.month, 3)">
+              <label>{{dayWeek.day}}</label>
+            </th>
+          </tr>
+
+          <tr>
+            <th class="week-days" *ngFor="let dayWeek of item.weekFour" [ngClass]="{'week-days-color': dayWeek.selected}" (click)="selectDay(dayWeek.atomicDay, item.month, 4)">
+              <label>{{dayWeek.day}}</label>
+            </th>
+          </tr>
+
+          <tr>
+            <th class="week-days" *ngFor="let dayWeek of item.weekFive" [ngClass]="{'week-days-color': dayWeek.selected}" (click)="selectDay(dayWeek.atomicDay, item.month, 5)">
+              <label>{{dayWeek.day}}</label>
+            </th>
+          </tr>
+
+          <tr>
+            <th class="week-days" *ngFor="let dayWeek of item.weekSix" [ngClass]="{'week-days-color': dayWeek.selected}" (click)="selectDay(dayWeek.atomicDay, item.month, 6)">
+              <label>{{dayWeek.day}}</label>
             </th>
           </tr>
         </table>

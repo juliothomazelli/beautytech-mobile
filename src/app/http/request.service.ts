@@ -32,7 +32,8 @@ export class RequestService {
     }    
 
     StorageUtils.storeData(StorageUtilsTypes.sessionToken, response.body.Token);
-    StorageUtils.storeDataJSON(StorageUtilsTypes.userInfo, response.body);
+    StorageUtils.storeDataJSON(StorageUtilsTypes.userInfo, response.body.userInfo);
+    StorageUtils.storeDataJSON(StorageUtilsTypes.sessionInfo, response.body.sessionInfo);
 
     return true;
   }
